@@ -3,12 +3,28 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
-
+import axios from "axios";
 const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const handleAddUser = async (values) => {
+    try {
+      const newUser = {
+        username: values.username,
+        email: values.email,
+        number: values.number,
+        role: values.role,
+       
+      };
+
+      // Affichez les données qui seront envoyées
+      console.log("Nouvel user :", newUser);
+      const response = await axios.post('http://localhost:3001/user/users', newUser);
+
+      console.log("Réponse du serveur :", response.data);
+    } catch (error) {
+      console.error('Erreur lors de l\'ajout de user :', error);
+    }
   };
 
   return (
@@ -16,19 +32,19 @@ const Form = () => {
       <Header title="CREATE USER" subtitle="Create a New User Profile" />
 
       <Formik
-        onSubmit={handleFormSubmit}
+        onSubmit={handleAddUser}
         initialValues={initialValues}
         validationSchema={checkoutSchema}
       >
         {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
+         values,
+         errors,
+         touched,
+         handleBlur,
+         handleChange,
+         handleSubmit,
         }) => (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} methos="POST">
             <Box
               display="grid"
               gap="30px"
@@ -41,33 +57,20 @@ const Form = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="First Name"
+                label="username"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.firstName}
-                name="firstName"
-                error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
-                sx={{ gridColumn: "span 2" }}
+                value={values.username}
+                name="username"
+                error={!!touched.username && !!errors.username}
+                helperText={touched.username && errors.username}
+                sx={{ gridColumn: "span 4" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Last Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Email"
+                label="email"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.email}
@@ -76,49 +79,38 @@ const Form = () => {
                 helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 4" }}
               />
+             
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Contact Number"
+                label="number"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.contact}
-                name="contact"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
+                value={values.number}
+                name="number"
+                error={!!touched.number && !!errors.number}
+                helperText={touched.number && errors.number}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Address 1"
+                label="role"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
+                value={values.role}
+                name="role"
+                error={!!touched.role && !!errors.role}
+                helperText={touched.role && errors.role}
                 sx={{ gridColumn: "span 4" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 2"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address2}
-                name="address2"
-                error={!!touched.address2 && !!errors.address2}
-                helperText={touched.address2 && errors.address2}
-                sx={{ gridColumn: "span 4" }}
-              />
+            
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
-                Create New User
+                Ajouter
               </Button>
             </Box>
           </form>
@@ -132,23 +124,20 @@ const phoneRegExp =
   /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
 
 const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  contact: yup
-    .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-  address1: yup.string().required("required"),
-  address2: yup.string().required("required"),
+  username: yup.string().required("required"),
+  email: yup.string().required("required"),
+  
+  number: yup.string().matches(phoneRegExp, "Phone number is not valid").required("required"),
+  role: yup.string().required("required"),
+  
 });
 const initialValues = {
-  firstName: "",
-  lastName: "",
+  username: "",
   email: "",
-  contact: "",
-  address1: "",
-  address2: "",
+  
+  number: "",
+  role: "",
+  
 };
 
 export default Form;

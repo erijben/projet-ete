@@ -136,6 +136,13 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
+              title="ping"
+              to="/ping"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
               title="Ajouter un équipement "
               to="/contacts"
               icon={<ContactsOutlinedIcon />}

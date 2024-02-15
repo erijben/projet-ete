@@ -9,7 +9,7 @@ import axios from 'axios';
 
 
 
-const Form = () => {
+const  Contacts = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleAddEquipment = async (values) => {
@@ -135,8 +135,6 @@ const Form = () => {
   );
 };
 
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
 
 
   const checkoutSchema = yup.object().shape({
@@ -159,4 +157,4 @@ const phoneRegExp =
 
 // ... (schéma de validation et valeurs initiales)
 
-export default Form;
+export default  Contacts ;

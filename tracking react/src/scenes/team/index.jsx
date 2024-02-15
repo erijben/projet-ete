@@ -35,27 +35,8 @@ const Team = () => {
     // Logic to handle button 2 action here
   };
 
-  const handlePingButtonClick = async (row) => {
-    try {
-      const hostname = row?.Nom;
-  
-      if (!hostname) {
-        console.error('Hostname is undefined');
-        return;
-      }
-  
-      const pingResponse = await axios.post('http://localhost:3001/ping', { hostname });
-  
-      // Assuming the response from the server contains the ping result
-      const pingResult = pingResponse.data;
-  
-      console.log('Ping Result:', pingResult);
-  
-      // Add logic to update the state or perform any other actions with pingResult
-    } catch (error) {
-      console.error('Error during ping request:', error);
-    }
-  };
+  const handlePingButtonClick = async (row) => {};
+    
   const columns = [
     { field: "id", headerName: "ID" },
     {
