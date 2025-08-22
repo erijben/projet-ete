@@ -1,0 +1,10 @@
+{
+  "name": "projet-ete",
+  "private": true,
+  "scripts": {
+    "start": "concurrently \"npm run dev --prefix creatis-backend-develop\" \"npm start --prefix creatis-frontend-develop\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.0"
+  }
+}
